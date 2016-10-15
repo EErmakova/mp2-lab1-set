@@ -309,3 +309,84 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
 
   EXPECT_NE(bf1, bf2);
 }
+
+TEST(TBitField, my_own_test_two_or_right)
+{
+	const int size = 6;
+	TBitField bf1(size), bf2(size), bf3(size);
+	TBitField bfres1(size), bfres2(size);
+	//bf1 = 011000
+	bf1.SetBit(1);
+	bf1.SetBit(2);
+	//bf2 = 001001
+	bf2.SetBit(2);
+	bf2.SetBit(5);
+	//bf3 = 010111
+	bf3.SetBit(1);
+	bf3.SetBit(3);
+	bf3.SetBit(4);
+	bf3.SetBit(5);
+	//bfres1 = 011111
+	bfres1 = (bf1 | bf2| bf3);
+	//bfres2 = 011111	
+	bfres2.SetBit(1);
+	bfres2.SetBit(2);
+	bfres2.SetBit(3);
+	bfres2.SetBit(4);
+	bfres2.SetBit(5);
+
+	EXPECT_EQ(bfres2, bfres1);
+}
+
+TEST(TBitField, my_own_test_two_or_wrong)
+{
+	const int size = 3;
+	TBitField bf1(size), bf2(size), bf3(size);
+	TBitField bfres1(size), bfres2(size);
+	//bf1 = 100
+	bf1.SetBit(0);
+	//bf2 = 100	
+	bf2.SetBit(0);
+	//bf3 = 100	
+	bf3.SetBit(0);
+	//bfres1 = 100
+	bfres1 = (bf1 | bf2 | bf3);
+	//bfres2 = 010
+	bfres2.SetBit(1);
+
+	EXPECT_NE(bfres2, bfres1);
+}
+
+TEST(TBitField, my_test_double_clr_right)
+{
+	const int size = 4;
+	TBitField bf1(size), bfres(size);
+	//bf1 = 1100
+	bf1.SetBit(0);
+	bf1.SetBit(1);
+	//bf1 = 0100
+	bf1.ClrBit(0);
+	bf1.ClrBit(0);
+	bfres.SetBit(1);
+
+	EXPECT_EQ(bfres, bf1);
+}
+
+TEST(TBitField, my_test_double_clr_wrong)
+{
+	const int size = 7;
+	TBitField bf1(size), bfres(size);
+	//bf1 = 0010111
+	bf1.SetBit(2);
+	bf1.SetBit(4);
+	bf1.SetBit(5);
+	bf1.SetBit(6);
+	//bf1 = 0010101
+	bf1.ClrBit(5);
+	bf1.ClrBit(5);
+	bfres.SetBit(2);
+	bfres.SetBit(4);
+	bfres.SetBit(6);
+
+	EXPECT_EQ(bfres, bf1);
+}
