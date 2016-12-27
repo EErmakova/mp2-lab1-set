@@ -20,7 +20,7 @@ TBitField::TBitField(int len)
 
 	}
 	else
-		throw 1;
+		throw std::logic_error("");
 	
 }
 
@@ -63,7 +63,7 @@ void TBitField::SetBit(const int n) // установить бит
 	if ((n >= 0) && (n < BitLen))
 		pMem[GetMemIndex(n)] |= GetMemMask(n);
 	else
-		throw 1;
+		throw std::logic_error("");
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
@@ -71,7 +71,7 @@ void TBitField::ClrBit(const int n) // очистить бит
 	if ((n >= 0) && (n < BitLen))
 		pMem[GetMemIndex(n)] &= ~GetMemMask(n);
 	else
-		throw 1;
+		throw std::logic_error("");
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
@@ -79,7 +79,7 @@ int TBitField::GetBit(const int n) const // получить значение б
 	if ((n >= 0) && (n < BitLen))
 		return pMem[GetMemIndex(n)] & GetMemMask(n);
 	else
-		throw 1;
+		throw std::logic_error("");
 }
 
 // битовые операции
@@ -177,10 +177,7 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
 	int i = 0;
 	char ch;
-	do
-		istr >> ch;
-	while (ch != ' ');
-	while (true)
+    while (true)
 	{
 		istr >> ch;
 		if (ch == '0')
